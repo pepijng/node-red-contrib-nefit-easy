@@ -1,0 +1,86 @@
+
+<script type="text/x-red" data-template-name="nefit-easy">
+    <div class="form-row">
+        <label for="node-input-easy"><i class="fa fa-globe"></i> Nefit Easy</label>
+        <input type="text" id="node-input-easy">
+    </div>
+    <div class="form-row">
+        <label for="node-input-topic"><i class="fa fa-tasks"></i> Topic</label>
+        <input type="text" id="node-input-topic" placeholder="Topic">
+    </div>
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <br/>
+    <div class="form-row">
+        <label for="node-input-command"><i class="fa fa-cogs"></i> Command</label>
+        <select type="text" id="node-input-command" style="width: 150px;">
+            <option value="status">Status</option>
+            <option value="pressure">Pressure</option>
+            <option value="location">Location</option>
+            <option value="program">Program data</option>
+            <option value="display-code">Display boiler statuscode</option>
+            <option value="set-temperature">Set temperature</option>
+            <option value="set-program">Set active program</option>
+         </select>
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="nefit-easy">
+   <p>This node uses the Nefit Easy Client Library to connect to your Nefit Easy thermostat.</p>
+</script>
+
+<script type="text/javascript">
+    RED.nodes.registerType('nefit-easy',{
+        category: 'input',      
+        color:"#999999",
+        defaults: {
+            easy: {value:"", type:"nefit-easy-config"},
+            name: {value:""},
+            topic: {value:"nefit-easy", required:true},
+            command: {value:""} 
+        },
+        inputs:1,               
+        outputs:1,              
+        icon: "nefit_easy_icon.png",     // saved in  icons/myicon.png
+        label: function() {     // sets the default label contents
+            return this.name||this.topic||"Nefit Easy";
+        },
+        paletteLabel: "nefit easy",
+        labelStyle: function() { // sets the class to apply to the label
+            return this.name?"node_label_italic":"";
+        }
+    });
+</script>
+
+
+
+<script type="text/javascript">
+    RED.nodes.registerType('nefit-easy-config',{
+        category: 'config',
+        defaults: {
+            serialNumber: {value:""}, 
+            accessKey: {value:""}, 
+            password: {value:""}
+        },
+        label: function() {
+            return "Easy - "+this.serialNumber;
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="nefit-easy-config">
+    <div class="form-row">
+        <label for="node-config-input-serialNumber"><i class="fa fa-asterisk"></i> Serial</label>
+        <input type="text" id="node-config-input-serialNumber" placeholder="Nefit Easy Serial">
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-accessKey"><i class="fa fa-tablet"></i> Accesscode</label>
+        <input type="text" id="node-config-input-accessKey" placeholder="Nefit Easy Access Code">
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-password"><i class="fa fa-lock"></i> Password</label>
+        <input type="password" id="node-config-input-password">
+    </div>
+</script>

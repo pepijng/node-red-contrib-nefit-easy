@@ -1,0 +1,21 @@
+{
+    "name"         : "node-red-contrib-nefit-easy",
+    "version"      : "1.0.0",
+    "description"  : "Nefit Easy node for Node RED",
+    "author"       : "Pepijn Goossens <pepijn@pepijn.com>",
+    "license"      : "MIT",
+    "dependencies": {
+      "bluebird": "^3.1.1",
+      "debug": "^2.2.0",
+      "docopt": "^0.6.2",
+      "http-string-parser": "0.0.5",
+      "node-xmpp-client": "^3.0.0",
+      "promise-queue": "^2.2.0"
+    },
+    "keywords": [ "node-red","nefit","easy" ],
+    "node-red"     : {
+        "nodes": {
+            "nefit-easy": "nefit-easy/nefit-easy.js"
+        }
+    }
+}
