@@ -1,3 +1,7 @@
+/*
+ * Nefit Easy Node for Node-RED
+ *
+*/
 
 module.exports = function(RED) {
     "use strict";
@@ -28,7 +32,7 @@ module.exports = function(RED) {
             node.serialNumber = this.easyconfig.serialNumber;
             node.accessKey = this.easyconfig.accessKey;
             node.password = this.easyconfig.password;
-         } else { node.error("GEEN CONFIG"); }
+         } else {  }
         
         this.on('input', function (msg) {
 
@@ -106,7 +110,6 @@ module.exports = function(RED) {
                     client.end();
                 });
         } else if (node.command == 'set-temperature') {
-                node.warn('Set temp: '+msg.payload);
             client.connect().then( () => {
                 return Promise.all([ client.setTemperature(Number(msg.payload)) ]);
                 }).spread((setTemperature) => {
