@@ -7,7 +7,7 @@ module.exports = function(RED) {
     "use strict";
 
     const Promise         = require('bluebird');
-    const NefitEasyClient = require('./nefit-easy-client/index.js');
+    const NefitEasyClient = require('nefit-easy-client');
     
     function NefitEasyConfigNode(n) {
         RED.nodes.createNode(this,n);
@@ -122,8 +122,6 @@ module.exports = function(RED) {
                 }).finally(() => {
                     client.end();
                 })            
-                
-                
         }
             
         });
