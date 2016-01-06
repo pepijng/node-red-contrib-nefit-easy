@@ -7,7 +7,7 @@ module.exports = function(RED) {
     "use strict";
 
     const Promise         = require('bluebird');
-    const NefitEasyClient = require('nefit-easy-client');
+    const NefitEasyClient = require('nefit-easy-commands');
     
     function NefitEasyConfigNode(n) {
         RED.nodes.createNode(this,n);
