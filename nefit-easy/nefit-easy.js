@@ -122,6 +122,21 @@ module.exports = function(RED) {
                 }).finally(() => {
                     client.end();
                 })            
+        } else if (node.command == 'set-program') {
+        } else if (node.command == 'flow-temperature') {
+            // Read the actual flow temperature
+            client.connect().then( () => {
+                return client.get('/heatingCircuits/hc1/actualSupplyTemperature');
+                }).then((get) => {
+                    msg.topic = this.topic;
+                    msg.payload = {};
+                    msg.payload = get;
+                    this.send(msg);
+                }).catch((e) => {
+                    node.error(e)
+                }).finally(() => {
+                    client.end();
+                });
         }
             
         });
