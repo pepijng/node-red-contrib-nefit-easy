@@ -34,15 +34,15 @@ module.exports = function(RED) {
             node.password = this.easyconfig.password;
          } else {  }
         
-        this.on('input', function (msg) {
-
+    
         const client = NefitEasyClient({
                         serialNumber : node.serialNumber,
                         accessKey    : node.accessKey,
                         password     : node.password,
                         });            
             
-            
+        this.on('input', function (msg) {
+        
         if (node.command == 'status') {
             client.connect().then( () => {
                 return Promise.all([ client.status() ]);
@@ -54,7 +54,7 @@ module.exports = function(RED) {
                 }).catch((e) => {
                     node.error(e)
                 }).finally(() => {
-                    client.end();
+                    //client.end();
                 });
 
         } else if (node.command == 'pressure') {
@@ -68,7 +68,7 @@ module.exports = function(RED) {
                 }).catch((e) => {
                     node.error(e)
                 }).finally(() => {
-                    client.end();
+                    //client.end();
                 });
         } else if (node.command == 'location') {
             client.connect().then( () => {
@@ -81,7 +81,7 @@ module.exports = function(RED) {
                 }).catch((e) => {
                     node.error(e)
                 }).finally(() => {
-                    client.end();
+                    //client.end();
                 });
         } else if (node.command == 'program') {
             client.connect().then( () => {
@@ -94,7 +94,7 @@ module.exports = function(RED) {
                 }).catch((e) => {
                     node.error(e)
                 }).finally(() => {
-                    client.end();
+                    //client.end();
                 });
         } else if (node.command == 'display-code') {
             client.connect().then( () => {
@@ -107,7 +107,7 @@ module.exports = function(RED) {
                 }).catch((e) => {
                     node.error(e)
                 }).finally(() => {
-                    client.end();
+                    //client.end();
                 });
         } else if (node.command == 'set-temperature') {
             client.connect().then( () => {
@@ -120,9 +120,8 @@ module.exports = function(RED) {
                 }).catch((e) => {
                     node.error(e)
                 }).finally(() => {
-                    client.end();
+                    //client.end();
                 })            
-        } else if (node.command == 'set-program') {
         } else if (node.command == 'flow-temperature') {
             // Read the actual flow temperature
             client.connect().then( () => {
@@ -135,14 +134,14 @@ module.exports = function(RED) {
                 }).catch((e) => {
                     node.error(e)
                 }).finally(() => {
-                    client.end();
+                    //client.end();
                 });
         }
             
         });
 
         this.on("close", function() {
-
+            client.end();
         });
     }
     RED.nodes.registerType("nefit-easy",NefitEasyNode);

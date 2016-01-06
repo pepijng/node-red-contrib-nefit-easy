@@ -4,14 +4,13 @@
         <input type="text" id="node-input-easy">
     </div>
     <div class="form-row">
-        <label for="node-input-topic"><i class="fa fa-tasks"></i> Topic</label>
-        <input type="text" id="node-input-topic" placeholder="Topic">
-    </div>
-    <div class="form-row">
         <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
         <input type="text" id="node-input-name" placeholder="Name">
     </div>
-    <br/>
+    <div class="form-row">
+        <label for="node-input-topic"><i class="fa fa-tasks"></i> Topic</label>
+        <input type="text" id="node-input-topic" placeholder="Topic">
+    </div>
     <div class="form-row">
         <label for="node-input-command"><i class="fa fa-cogs"></i> Command</label>
         <select type="text" id="node-input-command" style="width: 150px;">
@@ -21,7 +20,6 @@
             <option value="program">Program data</option>
             <option value="display-code">Display boiler statuscode</option>
             <option value="set-temperature">Set temperature</option>
-            <option value="set-program">Set active program</option>
             <option value="flow-temperature">Flow temperature</option>
     </select>
     </div>
@@ -55,7 +53,9 @@
 </script>
 
 
-
+<!-- 
+    Configuration node for Easy connection settings.
+-->
 <script type="text/javascript">
     RED.nodes.registerType('nefit-easy-config',{
         category: 'config',
