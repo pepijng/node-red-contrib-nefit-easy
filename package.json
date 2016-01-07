@@ -1,6 +1,6 @@
 {
     "name"         : "node-red-contrib-nefit-easy",
-    "version"      : "1.0.7",
+    "version"      : "1.0.8",
     "description"  : "Nefit Easy node for Node RED",
     "author"       : "Pepijn Goossens <pepijn@pepijn.com>",
     "license"      : "MIT",
@@ -14,7 +14,7 @@
     "homepage": "https://github.com/pepijng/node-red-contrib-nefit-easy#readme",
     "dependencies": {
         "bluebird": "^3.1.1",
-        "nefit-easy-commands": "^1.1.0"
+        "nefit-easy-commands": "latest"
     },
     "keywords": [ "node-red","nefit","easy" ],
     "node-red"     : {
