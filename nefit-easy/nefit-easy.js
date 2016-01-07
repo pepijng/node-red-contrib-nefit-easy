@@ -27,6 +27,8 @@ module.exports = function(RED) {
         
         var node = this;
         var msg = {};
+    
+        // Get global Nefit Easy Config (Serial, Accesskey and Passord)
         this.easyconfig = RED.nodes.getNode(this.easy);
          if (this.easyconfig) {
             node.serialNumber = this.easyconfig.serialNumber;
@@ -35,6 +37,7 @@ module.exports = function(RED) {
          } else {  }
         
     
+        // Create Nefit Easy Client
         const client = NefitEasyClient({
                         serialNumber : node.serialNumber,
                         accessKey    : node.accessKey,
