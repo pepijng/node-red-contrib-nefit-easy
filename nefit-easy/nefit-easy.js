@@ -42,7 +42,7 @@ module.exports = function(RED) {
                         serialNumber : node.serialNumber,
                         accessKey    : node.accessKey,
                         password     : node.password,
-                        requestTimeout : 30,
+                        requestTimeout : 30000,
                         });            
         
         
