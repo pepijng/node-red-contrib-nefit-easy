@@ -42,8 +42,11 @@ module.exports = function(RED) {
                         serialNumber : node.serialNumber,
                         accessKey    : node.accessKey,
                         password     : node.password,
+                        requestTimeout : 30,
                         });            
-            
+        
+        
+        // This will be executed on every input message
         this.on('input', function (msg) {
         
         if (node.command == 'status') {
