@@ -1,7 +1,7 @@
 <script type="text/x-red" data-template-name="nefit-easy">
     <div class="form-row">
-        <label for="node-input-easy"><i class="fa fa-globe"></i> Nefit Easy</label>
-        <input type="text" id="node-input-easy">
+        <label for="node-input-easyconfig"><i class="fa fa-globe"></i> Nefit Easy</label>
+        <input type="text" id="node-input-easyconfig">
     </div>
     <div class="form-row">
         <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
@@ -19,8 +19,8 @@
             <option value="location">Location</option>
             <option value="program">Program data</option>
             <option value="display-code">Display boiler statuscode</option>
-            <option value="set-temperature">Set temperature</option>
             <option value="flow-temperature">Flow temperature</option>
+            <option value="set-temperature">Set temperature</option>
     </select>
     </div>
 </script>
@@ -34,7 +34,7 @@
         category: 'function',      
         color:"#999999",
         defaults: {
-            easy: {value:"", type:"nefit-easy-config"},
+            easyconfig: {value:"", type:"nefit-easy-config"},
             name: {value:""},
             topic: {value:"nefit-easy", required:true},
             command: {value:""} 
@@ -62,7 +62,8 @@
         defaults: {
             serialNumber: {value:""}, 
             accessKey: {value:""}, 
-            password: {value:""}
+            password: {value:""},
+            timeout: {value:"30"}
         },
         label: function() {
             return "Easy - "+this.serialNumber;
@@ -83,4 +84,9 @@
         <label for="node-config-input-password"><i class="fa fa-lock"></i> Password</label>
         <input type="password" id="node-config-input-password">
     </div>
+        <div class="form-row">
+        <label for="node-config-input-timeout"><i class="fa fa-cogs"></i> Timeout</label>
+        <input type="text" id="node-config-input-timeout">
+    </div>
+
 </script>

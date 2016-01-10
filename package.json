@@ -1,6 +1,6 @@
 {
     "name"         : "node-red-contrib-nefit-easy",
-    "version"      : "1.0.10",
+    "version"      : "1.1.0",
     "description"  : "Nefit Easy node for Node RED",
     "author"       : "Pepijn Goossens <pepijn@pepijn.com>",
     "license"      : "MIT",
@@ -19,7 +19,7 @@
     "keywords": [ "node-red","nefit","easy" ],
     "node-red"     : {
         "nodes": {
-            "nefit-easy": "nefit-easy/nefit-easy.js"
+            "nefit-easy": "nefit-easy.js"
         }
     }
 }
