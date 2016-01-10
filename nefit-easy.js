@@ -64,8 +64,7 @@ module.exports = function(RED) {
         // Command Functions
         //
         this.command = function(command,uri,value) {
-            this.log('Communication command '+command+' (param '+ uri + ' value '+value);
-            //
+            this.log('Nefit command '+command+' (param '+ uri + ' value '+value+')');
             var promise = null;
 
             switch (command) {
@@ -121,13 +120,30 @@ module.exports = function(RED) {
         // This will be executed on every input message
         this.on('input', function (msg) {
         
+        node.uri = null;
+        node.value = null;
+            
+        // Set-Temperature needs additional variables
+        if (node.command == 'set-temperature') {
+            node.value = msg.payload;
+        }
+                
         // Execute command and generate MQTT message
-        this.easy.command(node.command).then((data) => {
+        this.easy.command(node.command, node.uri, node.value).then((data) => {
             msg.topic   = this.topic;
             msg.payload = data;
             this.send(msg);
         }).catch((e) => {
-            node.error(e)
+            
+            switch (e) {
+                case 'REQUEST_TIMEOUT':
+                    node.warn('Nefit Command '+node.command+' : '+e);
+                    break;
+                    
+                default:
+                    node.error(e);
+                    return;
+            }
         });
             
         });
