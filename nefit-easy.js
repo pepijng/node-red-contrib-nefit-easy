@@ -33,7 +33,6 @@ module.exports = function(RED) {
         this.timeout = n.timeout;
         
         this.connected = false;
-        this.connecting = false;
         
         this.log('Starting Nefit Easy Node for Node-RED.');
 
@@ -50,13 +49,12 @@ module.exports = function(RED) {
         
         // connect
         client.connect().then(() => {
-            this.connecting = true;
             this.log('Nefit Easy '+this.serialNumber+' connected to Bosch backend.');
-            
             // Connected to Nefit thermostat and get firmware version. 
             return client.get('/gateway/versionFirmware');
         }).then((get) => {
             //this.log(JSON.stringify(get))
+            // Your Easy returned it's firmware, change status to connected.
             this.connected = true;
             this.log('Nefit Easy software firmware version: '+ get.value)
         }).catch((err) => {
@@ -97,7 +95,6 @@ module.exports = function(RED) {
                       promise = client.get('/heatingCircuits/hc1/actualSupplyTemperature').then((r) => {
                         return { temperature : r.value, unit : r.unitOfMeasure }
                        });
-                    //promise = client.get('/heatingCircuits/hc1/actualSupplyTemperature');
                     break;
 
                 default:
@@ -133,6 +130,9 @@ module.exports = function(RED) {
         
         node.uri = null;
         node.value = null;
+        
+        if (this.easy.connected) {
+            this.status({fill:"green",shape:"ring",text:"connected"});
             
         // Set-Temperature needs additional variables
         if (node.command == 'set-temperature') {
@@ -140,10 +140,12 @@ module.exports = function(RED) {
         }
                 
         // Execute command and generate MQTT message
+        this.status({fill:"yellow",shape:"ring",text:"communicating"});
         this.easy.command(node.command, node.uri, node.value).then((data) => {
             msg.topic   = this.topic;
             msg.payload = data;
             this.send(msg);
+            this.status({fill:"green",shape:"ring",text:"connected"});
         }).catch((e) => {
             
             switch (e) {
@@ -156,6 +158,10 @@ module.exports = function(RED) {
                     return;
             }
         });
+
+        } else {
+            this.status({fill:"red",shape:"ring",text:"disconnected"});
+        }
             
         });
         this.on("close", function() {
