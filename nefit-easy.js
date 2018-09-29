@@ -92,6 +92,10 @@ module.exports = function(RED) {
                     promise = client.setTemperature(Number(value));
                     break;
 
+                case 'set-fireplacemode':
+                    promise = client.setFireplaceMode(value);
+                    break;
+
                 case 'flow-temperature':
                       promise = client.get('/heatingCircuits/hc1/actualSupplyTemperature').then((r) => {
                         return { temperature : r.value, unit : r.unitOfMeasure }
