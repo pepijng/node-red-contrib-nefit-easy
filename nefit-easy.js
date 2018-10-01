@@ -3,6 +3,7 @@
 Nefit Easy Node for Node-RED
 -------------------------------------------------------------------------------------------------------------------
 Copyright (c) 2016 Pepijn Goossens
+Copyright (c) 2018 Raimond Brookman (forked from Pepijn's repository to make it work again)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
@@ -91,6 +92,10 @@ module.exports = function(RED) {
                     promise = client.setTemperature(Number(value));
                     break;
 
+                case 'set-fireplacemode':
+                    promise = client.setFireplaceMode(value);
+                    break;
+
                 case 'flow-temperature':
                       promise = client.get('/heatingCircuits/hc1/actualSupplyTemperature').then((r) => {
                         return { temperature : r.value, unit : r.unitOfMeasure }
@@ -135,7 +140,8 @@ module.exports = function(RED) {
             this.status({fill:"green",shape:"ring",text:"connected"});
             
         // Set-Temperature needs additional variables
-        if (node.command == 'set-temperature') {
+        if (node.command == 'set-temperature' ||
+            node.command == 'set-fireplacemode') {
             node.value = msg.payload;
         }
                 
