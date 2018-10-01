@@ -6,6 +6,8 @@
 
 This Node-RED Node is based on the <a href="https://github.com/robertklep/nefit-easy-commands">Nefit Easy™ client library build by Robert Klep</a>
 
+The repository was forked from https://github.com/pepijng/node-red-contrib-nefit-easy because this does not seem to be maintained anymore.
+
 ## Installation
 
 ```
