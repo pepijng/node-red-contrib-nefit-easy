@@ -140,7 +140,8 @@ module.exports = function(RED) {
             this.status({fill:"green",shape:"ring",text:"connected"});
             
         // Set-Temperature needs additional variables
-        if (node.command == 'set-temperature') {
+        if (node.command == 'set-temperature' ||
+            node.command == 'set-fireplacemode') {
             node.value = msg.payload;
         }
                 
