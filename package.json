@@ -1,7 +1,7 @@
 {
     "name"         : "node-red-contrib-nefit-easy2",
-    "version"      : "1.1.0",
-    "description"  : "Nefit Easy node for Node RED (updated fork)",
+    "version"      : "1.2.0",
+    "description"  : "Nefit Easy node for Node RED (updated fork from node-red-contrib-nefit-easy )",
     "author"       : "Raimond Brookman <raimondb@gmail.com>",
     "license"      : "MIT",
     "repository": {
