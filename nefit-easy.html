@@ -91,31 +91,31 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     'temp manual setpoint'        : MMT (Number),
     'hed enabled'                 : HED_EN (Boolean),
     'hed device at home'          : HED_DEV (Boolean),
-    }</code></pre>
+}</code></pre>
     <a href="https://github.com/marcelrv/nefit_easy_protocol/blob/master/uiStatus.md">Field description by the three letter codes</a>
     <li>Get Pressure</li>
     <pre><code>{ 
         pressure : [value], 
         unit : [unitOfMeasure] 
-    }</code></pre>
+}</code></pre>
     <li>Get Location</li>
     <pre><code>{ 
         lat : [latitude(Number)], 
         lng: [longitude(Number)] 
-    }</code></pre>
+}</code></pre>
     <li>Get Program data</li>
     <pre><code>
     {
-        active   : [activeProgram(Number)]this.get('/ecus/rrc/userprogram/activeprogram').then((r) => r.value),
+        active   : [activeProgram],
         program1 : programDataType,
         program2 : programDataType
-    }</code></pre>
+}</code></pre>
     programDataType: array of switchpoints of the following structure
     <pre><code>{
         dow  : [ 'Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa' ],
         time : [00:00],
         temp : [setpoint(Number)]
-    }</code></pre>
+}</code></pre>
 
     <li>Get Display boiler statuscode</li>
     <pre><code>{
@@ -123,13 +123,13 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
         cause : [causeCode],
         description : (string),
         action      : (string),
-    }</code></pre>
+}</code></pre>
     <li>Flow temperature</li>
     Get Actual Supply temperature
     <pre><code>{ 
         temperature : r.value, 
         unit : r.unitOfMeasure 
-    }</code></pre>
+}</code></pre>
     <li>Set temperature</li>
     Set the setpoint to the desired temperature.
     Input: 
@@ -146,7 +146,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     Output: 
     <pre><code>{ status : 'ok' }</code></pre>
 
-    <ul>Set Fireplace Mode</ul>
+    <li>Set Fireplace Mode</li>
     Input: Boolean (True, False)
     Output: 
     <pre><code>{ status : 'ok' }</code></pre>
