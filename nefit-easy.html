@@ -94,32 +94,42 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     }</code></pre>
     <a href="https://github.com/marcelrv/nefit_easy_protocol/blob/master/uiStatus.md">Field description by the three letter codes</a>
     <li>Get Pressure</li>
-    { pressure : [value], unit : [unitOfMeasure] }
+    <pre><code>{ 
+        pressure : [value], 
+        unit : [unitOfMeasure] 
+    }</code></pre>
     <li>Get Location</li>
-    { lat : [latitude(Number)], lng: [longitude(Number)] }
+    <pre><code>{ 
+        lat : [latitude(Number)], 
+        lng: [longitude(Number)] 
+    }</code></pre>
     <li>Get Program data</li>
+    <pre><code>
     {
         active   : [activeProgram(Number)]this.get('/ecus/rrc/userprogram/activeprogram').then((r) => r.value),
         program1 : programDataType,
         program2 : programDataType
-    }
+    }</code></pre>
     programDataType: array of switchpoints of the following structure
-    {
+    <pre><code>{
         dow  : [ 'Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa' ],
         time : [00:00],
         temp : [setpoint(Number)]
-    }
+    }</code></pre>
 
     <li>Get Display boiler statuscode</li>
-    {
+    <pre><code>{
         code  : [displayCode],
         cause : [causeCode],
         description : (string),
         action      : (string),
-    }
+    }</code></pre>
     <li>Flow temperature</li>
     Get Actual Supply temperature
-    <code>{ temperature : r.value, unit : r.unitOfMeasure }</code>
+    <pre><code>{ 
+        temperature : r.value, 
+        unit : r.unitOfMeasure 
+    }</code></pre>
     <li>Set temperature</li>
     Set the setpoint to the desired temperature.
     Input: 
@@ -133,11 +143,13 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 <em>"Set the thermostat to 21°C, but only if it's not already set higher than that."</em></p>
 <pre><code>client.setTemperature('&gt; 21').then(...)
 </code></pre>
-    Output: <code>{ status : 'ok' }</code>
+    Output: 
+    <pre><code>{ status : 'ok' }</code></pre>
 
     <ul>Set Fireplace Mode</ul>
     Input: Boolean (True, False)
-    Output: <code>{ status : 'ok' }</code>
+    Output: 
+    <pre><code>{ status : 'ok' }</code></pre>
 </ul>
 <h3>References</h3>
    <ul>
