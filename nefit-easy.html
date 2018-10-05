@@ -60,7 +60,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
    <p><code>msg.payload</code> consist of JSON returned by the selected command.
 
     <ul>
-    <li>Get Status</li>
+    <li><b>Get Status</b></li>
     <pre><code>{
     'user mode'                   : UMD,
     'clock program'               : CPM,
@@ -87,17 +87,17 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     'hed device at home'          : HED_DEV (Boolean),
 }</code></pre>
     <a href="https://github.com/marcelrv/nefit_easy_protocol/blob/master/uiStatus.md">Field description by the three letter codes</a>
-    <li>Get Pressure</li>
+    <li><b>Get Pressure</b></li>
     <pre><code>{ 
     pressure : [value], 
     unit : [unitOfMeasure] 
 }</code></pre>
-    <li>Get Location</li>
+    <li><b>Get Location</b></li>
     <pre><code>{ 
     lat : [latitude(Number)], 
     lng: [longitude(Number)] 
 }</code></pre>
-    <li>Get Program data</li>
+    <li><b>Get Program data</b></li>
     <pre><code>{
     active   : [activeProgram],
     program1 : programDataType,
@@ -110,22 +110,22 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     temp : [setpoint(Number)]
 }</code></pre>
 
-    <li>Get Display boiler statuscode</li>
+    <li><b>Get Display boiler statuscode</b></li>
     <pre><code>{
     code  : [displayCode],
     cause : [causeCode],
     description : (string),
     action      : (string),
 }</code></pre>
-    <li>Flow temperature</li>
+    <li><b>Flow temperature</b></li>
     Get Actual Supply temperature
     <pre><code>{ 
     temperature : r.value, 
     unit : r.unitOfMeasure 
 }</code></pre>
-    <li>Set temperature</li>
+    <li><b>Set temperature</b></li>
     Set the setpoint to the desired temperature.
-    <p>Input:</p> 
+    <p><i>Input:</i></p> 
     <p><code>value</code> can be prefixed with a specifier to conditionally set the temperature if it doesn't match the specifier.</p>
 <p>Valid specifiers:</p>
 <ul>
@@ -136,13 +136,13 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 <em>"Set the thermostat to 21°C, but only if it's not already set higher than that."</em></p>
 <pre><code>client.setTemperature('&gt; 21').then(...)
 </code></pre>
-    Output: 
+    <i>Output:</i> 
     <pre><code>{ status : 'ok' }</code></pre>
 
-    <li>Set Fireplace Mode</li>
-    <p>Input:</p> 
+    <li><b>Set Fireplace Mode</b></li>
+    <p><i>Input:</i></p> 
     <p>Boolean (True, False)</p>
-    <p>Output: 
+    <p><i>Output:</i> 
     <pre><code>{ status : 'ok' }</code></pre>
     </p>
 </ul>
