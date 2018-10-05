@@ -3,6 +3,7 @@
 Nefit Easy Node for Node-RED
 -------------------------------------------------------------------------------------------------------------------
 Copyright (c) 2016 Pepijn Goossens
+Copyright (c) 2018 Raimond Brookman
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
@@ -27,11 +28,11 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     <div class="form-row">
         <label for="node-input-command"><i class="fa fa-cogs"></i> Command</label>
         <select type="text" id="node-input-command" style="width: 150px;">
-            <option value="status">Status</option>
-            <option value="pressure">Pressure</option>
-            <option value="location">Location</option>
-            <option value="program">Program data</option>
-            <option value="display-code">Display boiler statuscode</option>
+            <option value="status">Get Status</option>
+            <option value="pressure">Get Pressure</option>
+            <option value="location">Get Location</option>
+            <option value="program">Get Program data</option>
+            <option value="display-code">Get Display boiler statuscode</option>
             <option value="flow-temperature">Flow temperature</option>
             <option value="set-temperature">Set temperature</option>
             <option value="set-fireplacemode">Set Fireplace Mode</option>
@@ -41,7 +42,108 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 <script type="text/x-red" data-help-name="nefit-easy">
    <p>This node uses the Nefit Easy Client Library to connect to your Nefit Easy thermostat.</p>
+   <h3>Inputs</h3>
+   <dl class="message-properties">
+       <dt>payload
+           <span class="property-type">string | buffer</span>
+       </dt>
+       <dd> The value to be passed to the selected Set Command </dd>
+   </dl>
+
+    <h3>Outputs</h3>
+    <ol class="node-ports">
+        <li>Standard output
+            Output depends on the chosen command.
+
+            <dl class="message-properties">
+                <dt>payload <span class="property-type">string</span></dt>
+                <dd>Returned JSON data from the selected command</dd>
+            </dl>
+        </li>
+    </ol>
+
+<h3>Details</h3>
+   <p><code>msg.payload</code> consist of JSON returned by the selected command.
+
+    <ul>Get Status</ul>
+    {
+    'user mode'                   : UMD,
+    'clock program'               : CPM,
+    'in house status'             : IHS,
+    'in house temp'               : IHT (Number),
+    'hot water active'            : DHW (Boolean),
+    'boiler indicator'            : BAI ( 'central heating', 'hot water', 'off' ),
+    'control'                     : CTR,
+    'temp override duration'      : TOD (Number),
+    'current switchpoint'         : CSP (Number),
+    'ps active'                   : ESI (Boolean),
+    'powersave mode'              : ESI (Boolean),
+    'fp active'                   : FPA (Boolean),
+    'fireplace mode'              : FPA (Boolean),
+    'temp override'               : TOR (Boolean),
+    'holiday mode'                : HMD (Boolean),
+    'boiler block'                : BBE (Boolean),
+    'boiler lock'                 : BLE (Boolean),
+    'boiler maintenance'          : BMR (Boolean),
+    'temp setpoint'               : TSP (Number),
+    'temp override temp setpoint' : TOT (Number),
+    'temp manual setpoint'        : MMT (Number),
+    'hed enabled'                 : HED_EN (Boolean),
+    'hed device at home'          : HED_DEV (Boolean),
+    }
+    <a href="https://github.com/marcelrv/nefit_easy_protocol/blob/master/uiStatus.md">Field description by the three letter codes</a>
+    <ul>Get Pressure</ul>
+    { pressure : [value], unit : [unitOfMeasure] }
+    <ul>Get Location</ul>
+    { lat : [latitude(Number)], lng: [longitude(Number)] }
+    <ul>Get Program data</ul>
+    {
+        active   : [activeProgram(Number)]this.get('/ecus/rrc/userprogram/activeprogram').then((r) => r.value),
+        program1 : programDataType,
+        program2 : programDataType
+    }
+    programDataType: array of switchpoints of the following structure
+    {
+        dow  : [ 'Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa' ],
+        time : [00:00],
+        temp : [setpoint(Number)]
+    }
+
+    <ul>Get Display boiler statuscode</ul>
+    {
+        code  : [displayCode],
+        cause : [causeCode],
+        description : (string),
+        action      : (string),
+    }
+    <ul>Flow temperature</ul>
+    Actual Supply temperature
+    { temperature : r.value, unit : r.unitOfMeasure }
+    <ul>Set temperature</ul>
+    Set the setpoint to the desired temperature.
+    Input: 
+    <p><code>value</code> can be prefixed with a specifier to conditionally set the temperature if it doesn't match the specifier.</p>
+<p>Valid specifiers:</p>
+<ul>
+<li><code>&gt;</code> : only set new temperature if it's larger then the currently set temperature;</li>
+<li><code>&lt;</code> : only set new temperature if it's smaller than the currently set temperature;</li>
+</ul>
+<p>Example:
+<em>"Set the thermostat to 21°C, but only if it's not already set higher than that."</em></p>
+<pre><code>client.setTemperature('&gt; 21').then(...)
+</code></pre>
+    Output: { status : 'ok' }
+
+    <ul>Set Fireplace Mode</ul>
+    Input: Boolean (True, False)
+    Output: <code>{ status : 'ok' }</code>
+
+<h3>References</h3>
+   <ul>
+       <li></li>
+   </ul> 
 </script>
+
 
 <script type="text/javascript">
     RED.nodes.registerType('nefit-easy',{
