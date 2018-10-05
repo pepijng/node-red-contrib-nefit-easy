@@ -45,22 +45,16 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
    <h3>Inputs</h3>
    <dl class="message-properties">
        <dt>payload
-           <span class="property-type">string | buffer</span>
+           <span class="property-type">string | number | boolean</span>
        </dt>
-       <dd> The value to be passed to the selected Set Command </dd>
+       <dd> The value to be passed to the selected Command (only for Set Commands) </dd>
    </dl>
 
     <h3>Outputs</h3>
-    <ol class="node-ports">
-        <li>Standard output
-            Output depends on the chosen command.
-
-            <dl class="message-properties">
-                <dt>payload <span class="property-type">string</span></dt>
-                <dd>Returned JSON data from the selected command</dd>
-            </dl>
-        </li>
-    </ol>
+    <dl class="message-properties">
+        <dt>payload <span class="property-type">string</span></dt>
+        <dd>Returned JSON data from the selected command</dd>
+    </dl>
 
 <h3>Details</h3>
    <p><code>msg.payload</code> consist of JSON returned by the selected command.
@@ -95,40 +89,39 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     <a href="https://github.com/marcelrv/nefit_easy_protocol/blob/master/uiStatus.md">Field description by the three letter codes</a>
     <li>Get Pressure</li>
     <pre><code>{ 
-        pressure : [value], 
-        unit : [unitOfMeasure] 
+    pressure : [value], 
+    unit : [unitOfMeasure] 
 }</code></pre>
     <li>Get Location</li>
     <pre><code>{ 
-        lat : [latitude(Number)], 
-        lng: [longitude(Number)] 
+    lat : [latitude(Number)], 
+    lng: [longitude(Number)] 
 }</code></pre>
     <li>Get Program data</li>
-    <pre><code>
-    {
-        active   : [activeProgram],
-        program1 : programDataType,
-        program2 : programDataType
+    <pre><code>{
+    active   : [activeProgram],
+    program1 : programDataType,
+    program2 : programDataType
 }</code></pre>
     programDataType: array of switchpoints of the following structure
     <pre><code>{
-        dow  : [ 'Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa' ],
-        time : [00:00],
-        temp : [setpoint(Number)]
+    dow  : [ 'Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa' ],
+    time : [00:00],
+    temp : [setpoint(Number)]
 }</code></pre>
 
     <li>Get Display boiler statuscode</li>
     <pre><code>{
-        code  : [displayCode],
-        cause : [causeCode],
-        description : (string),
-        action      : (string),
+    code  : [displayCode],
+    cause : [causeCode],
+    description : (string),
+    action      : (string),
 }</code></pre>
     <li>Flow temperature</li>
     Get Actual Supply temperature
     <pre><code>{ 
-        temperature : r.value, 
-        unit : r.unitOfMeasure 
+    temperature : r.value, 
+    unit : r.unitOfMeasure 
 }</code></pre>
     <li>Set temperature</li>
     Set the setpoint to the desired temperature.
@@ -147,14 +140,11 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     <pre><code>{ status : 'ok' }</code></pre>
 
     <li>Set Fireplace Mode</li>
-    Input: Boolean (True, False)
+    Input: 
+    Boolean (True, False)
     Output: 
     <pre><code>{ status : 'ok' }</code></pre>
 </ul>
-<h3>References</h3>
-   <ul>
-       <li></li>
-   </ul> 
 </script>
 
 
