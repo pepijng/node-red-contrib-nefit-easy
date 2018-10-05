@@ -65,7 +65,8 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 <h3>Details</h3>
    <p><code>msg.payload</code> consist of JSON returned by the selected command.
 
-    <ul>Get Status</ul>
+    <ul>
+    <li>Get Status</li>
     {
     'user mode'                   : UMD,
     'clock program'               : CPM,
@@ -92,11 +93,11 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     'hed device at home'          : HED_DEV (Boolean),
     }
     <a href="https://github.com/marcelrv/nefit_easy_protocol/blob/master/uiStatus.md">Field description by the three letter codes</a>
-    <ul>Get Pressure</ul>
+    <li>Get Pressure</li>
     { pressure : [value], unit : [unitOfMeasure] }
-    <ul>Get Location</ul>
+    <li>Get Location</li>
     { lat : [latitude(Number)], lng: [longitude(Number)] }
-    <ul>Get Program data</ul>
+    <li>Get Program data</li>
     {
         active   : [activeProgram(Number)]this.get('/ecus/rrc/userprogram/activeprogram').then((r) => r.value),
         program1 : programDataType,
@@ -109,17 +110,17 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
         temp : [setpoint(Number)]
     }
 
-    <ul>Get Display boiler statuscode</ul>
+    <li>Get Display boiler statuscode</li>
     {
         code  : [displayCode],
         cause : [causeCode],
         description : (string),
         action      : (string),
     }
-    <ul>Flow temperature</ul>
-    Actual Supply temperature
-    { temperature : r.value, unit : r.unitOfMeasure }
-    <ul>Set temperature</ul>
+    <li>Flow temperature</li>
+    Get Actual Supply temperature
+    <code>{ temperature : r.value, unit : r.unitOfMeasure }</code>
+    <li>Set temperature</li>
     Set the setpoint to the desired temperature.
     Input: 
     <p><code>value</code> can be prefixed with a specifier to conditionally set the temperature if it doesn't match the specifier.</p>
@@ -132,12 +133,12 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 <em>"Set the thermostat to 21°C, but only if it's not already set higher than that."</em></p>
 <pre><code>client.setTemperature('&gt; 21').then(...)
 </code></pre>
-    Output: { status : 'ok' }
+    Output: <code>{ status : 'ok' }</code>
 
     <ul>Set Fireplace Mode</ul>
     Input: Boolean (True, False)
     Output: <code>{ status : 'ok' }</code>
-
+</ul>
 <h3>References</h3>
    <ul>
        <li></li>
