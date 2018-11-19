@@ -36,6 +36,8 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
             <option value="flow-temperature">Flow temperature</option>
             <option value="set-temperature">Set temperature</option>
             <option value="set-fireplacemode">Set Fireplace Mode</option>
+            <option value="get-usermode">Get User Mode</option>
+            <option value="set-usermode">Set User Mode</option>
     </select>
     </div>
 </script>
@@ -144,6 +146,18 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     <p>Boolean (True, False)</p>
     <p><i>Output:</i> 
     <pre><code>{ status : 'ok' }</code></pre>
+
+    <li><b>Get User Mode</b></li>
+    Gets the current mode of operation
+    <p><i>Output:</i> 
+    <pre><code>{ value : 'manual' | 'clock' }</code></pre>
+
+    <li><b>Set User Mode</b></li>
+    <p><i>Input:</i></p> 
+    <p>String ('manual', 'clock')</p>
+    <p><i>Output:</i> 
+    <pre><code>{ status : 'ok' }</code></pre>
+
     </p>
 </ul>
 </script>

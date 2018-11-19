@@ -87,6 +87,14 @@ module.exports = function(RED) {
                 case 'program'  :
                     promise = client[command]();
                     break;
+                
+                case 'get-usermode':
+                    promise = client.userMode();
+                    break;
+
+                case 'set-usermode':
+                    promise = client.setUserMode(value);
+                    break;
 
                 case 'set-temperature':
                     promise = client.setTemperature(Number(value));
