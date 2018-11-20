@@ -149,7 +149,8 @@ module.exports = function(RED) {
             
         // Set-Temperature needs additional variables
         if (node.command == 'set-temperature' ||
-            node.command == 'set-fireplacemode') {
+            node.command == 'set-fireplacemode' ||
+            node.command == 'set-usermode') {
             node.value = msg.payload;
         }
                 
