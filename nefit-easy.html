@@ -43,124 +43,123 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 </script>
 
 <script type="text/x-red" data-help-name="nefit-easy">
-   <p>This node uses the Nefit Easy Client Library to connect to your Nefit Easy thermostat.</p>
-   <h3>Inputs</h3>
-   <dl class="message-properties">
-       <dt>payload
-           <span class="property-type">string | number | boolean</span>
-       </dt>
-       <dd> The value to be passed to the selected Command (only for Set Commands) </dd>
-   </dl>
-
-    <h3>Outputs</h3>
+    <p>This node uses the Nefit Easy Client Library to connect to your Nefit Easy thermostat.</p>
+    <h3>Inputs</h3>
     <dl class="message-properties">
-        <dt>payload <span class="property-type">string</span></dt>
-        <dd>Returned JSON data from the selected command</dd>
+        <dt>payload
+            <span class="property-type">string | number | boolean</span>
+        </dt>
+        <dd> The value to be passed to the selected Command (only for Set Commands) </dd>
     </dl>
-
-<h3>Details</h3>
-   <p><code>msg.payload</code> consist of JSON returned by the selected command.
-
-    <ul>
-    <li><b>Get Status</b></li>
-    <pre><code>{
-    'user mode'                   : UMD,
-    'clock program'               : CPM,
-    'in house status'             : IHS,
-    'in house temp'               : IHT (Number),
-    'hot water active'            : DHW (Boolean),
-    'boiler indicator'            : BAI ( 'central heating', 'hot water', 'off' ),
-    'control'                     : CTR,
-    'temp override duration'      : TOD (Number),
-    'current switchpoint'         : CSP (Number),
-    'ps active'                   : ESI (Boolean),
-    'powersave mode'              : ESI (Boolean),
-    'fp active'                   : FPA (Boolean),
-    'fireplace mode'              : FPA (Boolean),
-    'temp override'               : TOR (Boolean),
-    'holiday mode'                : HMD (Boolean),
-    'boiler block'                : BBE (Boolean),
-    'boiler lock'                 : BLE (Boolean),
-    'boiler maintenance'          : BMR (Boolean),
-    'temp setpoint'               : TSP (Number),
-    'temp override temp setpoint' : TOT (Number),
-    'temp manual setpoint'        : MMT (Number),
-    'hed enabled'                 : HED_EN (Boolean),
-    'hed device at home'          : HED_DEV (Boolean),
-}</code></pre>
-    <a href="https://github.com/marcelrv/nefit_easy_protocol/blob/master/uiStatus.md">Field description by the three letter codes</a>
-    <li><b>Get Pressure</b></li>
-    <pre><code>{ 
-    pressure : [value], 
-    unit : [unitOfMeasure] 
-}</code></pre>
-    <li><b>Get Location</b></li>
-    <pre><code>{ 
-    lat : [latitude(Number)], 
-    lng: [longitude(Number)] 
-}</code></pre>
-    <li><b>Get Program data</b></li>
-    <pre><code>{
-    active   : [activeProgram],
-    program1 : programDataType,
-    program2 : programDataType
-}</code></pre>
-    programDataType: array of switchpoints of the following structure
-    <pre><code>{
-    dow  : [ 'Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa' ],
-    time : [00:00],
-    temp : [setpoint(Number)]
-}</code></pre>
-
-    <li><b>Get Display boiler statuscode</b></li>
-    <pre><code>{
-    code  : [displayCode],
-    cause : [causeCode],
-    description : (string),
-    action      : (string),
-}</code></pre>
-    <li><b>Flow temperature</b></li>
-    Get Actual Supply temperature
-    <pre><code>{ 
-    temperature : r.value, 
-    unit : r.unitOfMeasure 
-}</code></pre>
-    <li><b>Set temperature</b></li>
-    Set the setpoint to the desired temperature.
-    <p><i>Input:</i></p> 
-    <p><code>value</code> can be prefixed with a specifier to conditionally set the temperature if it doesn't match the specifier.</p>
-<p>Valid specifiers:</p>
-<ul>
-<li><code>&gt;</code> : only set new temperature if it's larger then the currently set temperature;</li>
-<li><code>&lt;</code> : only set new temperature if it's smaller than the currently set temperature;</li>
-</ul>
-<p>Example:
-<em>"Set the thermostat to 21°C, but only if it's not already set higher than that."</em></p>
-<pre><code>client.setTemperature('&gt; 21').then(...)
-</code></pre>
-    <i>Output:</i> 
-    <pre><code>{ status : 'ok' }</code></pre>
-
-    <li><b>Set Fireplace Mode</b></li>
-    <p><i>Input:</i></p> 
-    <p>Boolean (True, False)</p>
-    <p><i>Output:</i> 
-    <pre><code>{ status : 'ok' }</code></pre>
-
-    <li><b>Get User Mode</b></li>
-    Gets the current mode of operation
-    <p><i>Output:</i> 
-    <pre><code>{ value : 'manual' | 'clock' }</code></pre>
-
-    <li><b>Set User Mode</b></li>
-    <p><i>Input:</i></p> 
-    <p>String ('manual', 'clock')</p>
-    <p><i>Output:</i> 
-    <pre><code>{ status : 'ok' }</code></pre>
-
-    </p>
-</ul>
-</script>
+ 
+     <h3>Outputs</h3>
+     <dl class="message-properties">
+         <dt>payload <span class="property-type">string</span></dt>
+         <dd>Returned JSON data from the selected command</dd>
+     </dl>
+ 
+ <h3>Details</h3>
+    <p><code>msg.payload</code> consist of JSON returned by the selected command.
+ 
+     <ul>
+     <li><b>Get Status</b></li>
+     <pre><code>{
+     'user mode'                   : UMD,
+     'clock program'               : CPM,
+     'in house status'             : IHS,
+     'in house temp'               : IHT (Number),
+     'hot water active'            : DHW (Boolean),
+     'boiler indicator'            : BAI ( 'central heating', 'hot water', 'off' ),
+     'control'                     : CTR,
+     'temp override duration'      : TOD (Number),
+     'current switchpoint'         : CSP (Number),
+     'ps active'                   : ESI (Boolean),
+     'powersave mode'              : ESI (Boolean),
+     'fp active'                   : FPA (Boolean),
+     'fireplace mode'              : FPA (Boolean),
+     'temp override'               : TOR (Boolean),
+     'holiday mode'                : HMD (Boolean),
+     'boiler block'                : BBE (Boolean),
+     'boiler lock'                 : BLE (Boolean),
+     'boiler maintenance'          : BMR (Boolean),
+     'temp setpoint'               : TSP (Number),
+     'temp override temp setpoint' : TOT (Number),
+     'temp manual setpoint'        : MMT (Number),
+     'hed enabled'                 : HED_EN (Boolean),
+     'hed device at home'          : HED_DEV (Boolean),
+ }</code></pre>
+     <a href="https://github.com/marcelrv/nefit_easy_protocol/blob/master/uiStatus.md">Field description by the three letter codes</a>
+     <li><b>Get Pressure</b></li>
+     <pre><code>{ 
+     pressure : [value], 
+     unit : [unitOfMeasure] 
+ }</code></pre>
+     <li><b>Get Location</b></li>
+     <pre><code>{ 
+     lat : [latitude(Number)], 
+     lng: [longitude(Number)] 
+ }</code></pre>
+     <li><b>Get Program data</b></li>
+     <pre><code>{
+     active   : [activeProgram],
+     program1 : programDataType,
+     program2 : programDataType
+ }</code></pre>
+     programDataType: array of switchpoints of the following structure
+     <pre><code>{
+     dow  : [ 'Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa' ],
+     time : [00:00],
+     temp : [setpoint(Number)]
+ }</code></pre>
+ 
+     <li><b>Get Display boiler statuscode</b></li>
+     <pre><code>{
+     code  : [displayCode],
+     cause : [causeCode],
+     description : (string),
+     action      : (string),
+ }</code></pre>
+     <li><b>Flow temperature</b></li>
+     Get Actual Supply temperature
+     <pre><code>{ 
+     temperature : r.value, 
+     unit : r.unitOfMeasure 
+ }</code></pre>
+     <li><b>Set temperature</b></li>
+     Set the setpoint to the desired temperature.
+     <p><i>Input:</i></p> 
+     <p><code>value</code> can be prefixed with a specifier to conditionally set the temperature if it doesn't match the specifier.</p>
+ <p>Valid specifiers:</p>
+ <ul>
+ <li><code>&gt;</code> : only set new temperature if it's larger then the currently set temperature;</li>
+ <li><code>&lt;</code> : only set new temperature if it's smaller than the currently set temperature;</li>
+ </ul>
+ <p>Example:
+ <em>"Set the thermostat to 21°C, but only if it's not already set higher than that."</em></p>
+ <pre><code>client.setTemperature('&gt; 21').then(...)
+ </code></pre>
+     <i>Output:</i> 
+     <pre><code>{ status : 'ok' }</code></pre>
+ 
+     <li><b>Set Fireplace Mode</b></li>
+     <p><i>Input:</i></p> 
+     <p>Boolean (True, False)</p>
+     <p><i>Output:</i> 
+     <pre><code>{ status : 'ok' }</code></pre>
+     </p>
+     <li><b>Get User Mode</b></li>
+     Gets the current mode of operation
+     <p><i>Output:</i> 
+     <pre><code>{ value : 'manual' | 'clock' }</code></pre>
+     </p>
+     <li><b>Set User Mode</b></li>
+     <p><i>Input:</i></p> 
+     <p>String ('manual', 'clock')</p>
+     <p><i>Output:</i> 
+     <pre><code>{ status : 'ok' }</code></pre>
+     </p>
+ </ul>
+ </script>
 
 
 <script type="text/javascript">
