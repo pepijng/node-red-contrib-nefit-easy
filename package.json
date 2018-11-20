@@ -13,7 +13,7 @@
     },
     "homepage": "https://github.com/RaimondB/node-red-contrib-nefit-easy#readme",
     "dependencies": {
-        "bluebird": "^3.5.3",
+        "bluebird": "^3.5.1",
         "nefit-easy-commands": "^3.0.2"
     },
     "keywords": [
