@@ -1,42 +1,43 @@
 {
-    "name": "node-red-contrib-nefit-easy2",
-    "version": "1.3.0",
-    "description": "Nefit Easy node for Node RED (updated fork from node-red-contrib-nefit-easy )",
-    "author": "Raimond Brookman <raimondb@gmail.com>",
-    "license": "MIT",
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/RaimondB/node-red-contrib-nefit-easy.git"
-    },
-    "bugs": {
-        "url": "https://github.com/RaimondB/node-red-contrib-nefit-easy/issues"
-    },
-    "homepage": "https://github.com/RaimondB/node-red-contrib-nefit-easy#readme",
-    "dependencies": {
-        "bluebird": "^3.5.1",
-        "nefit-easy-commands": "^3.0.2"
-    },
-    "keywords": [
-        "node-red",
-        "nefit",
-        "easy"
-    ],
-    "node-red": {
-        "nodes": {
-            "nefit-easy": "nefit-easy.js"
-        }
-    },
-    "devDependencies": {
-        "deep-extend": "^0.6.0",
-        "mocha": "^5.2.0",
-        "node-red": "~0.18.4",
-        "node-red-node-test-helper": "^0.1.8",
-        "should": "^13.2.3"
-    },
-    "peerDependencies": {
-        "node-red": "~0.18.4"
-    },
-    "scripts": {
-        "test": "mocha \"test/**/*_spec.js\""
+  "name": "node-red-contrib-nefit-easy2",
+  "version": "1.3.0",
+  "description": "Nefit Easy node for Node RED (updated fork from node-red-contrib-nefit-easy )",
+  "author": "Raimond Brookman <raimondb@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RaimondB/node-red-contrib-nefit-easy.git"
+  },
+  "bugs": {
+    "url": "https://github.com/RaimondB/node-red-contrib-nefit-easy/issues"
+  },
+  "homepage": "https://github.com/RaimondB/node-red-contrib-nefit-easy#readme",
+  "dependencies": {
+    "bluebird": "^3.5.1",
+    "nefit-easy-commands": "^3.0.2"
+  },
+  "keywords": [
+    "node-red",
+    "nefit",
+    "easy"
+  ],
+  "node-red": {
+    "nodes": {
+      "nefit-easy": "nefit-easy.js"
     }
+  },
+  "devDependencies": {
+    "deep-extend": "^0.6.0",
+    "mocha": "^5.2.0",
+    "node-red": "~0.18.4",
+    "node-red-node-test-helper": "^0.1.8",
+    "should": "^13.2.3",
+    "snyk": "^1.113.0"
+  },
+  "peerDependencies": {
+    "node-red": "~0.18.4"
+  },
+  "scripts": {
+    "test": "snyk test && mocha \"test/**/*_spec.js\""
+  }
 }

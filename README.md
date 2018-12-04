@@ -3,6 +3,7 @@
 <span class="badge-npmversion"><a href="https://www.npmjs.com/package/node-red-contrib-nefit-easy2" title="View this project on NPM"><img src="https://img.shields.io/npm/v/node-red-contrib-nefit-easy2.svg" alt="NPM version" /></a></span>
 <span class="badge-npmdownloads"><a href="https://npmjs.org/package/node-red-contrib-nefit-easy2" title="View this project on NPM"><img src="https://img.shields.io/npm/dm/node-red-contrib-nefit-easy2.svg" alt="NPM downloads" /></a></span>
 [![Build Status](https://travis-ci.com/RaimondB/node-red-contrib-nefit-easy.svg?branch=master)](https://travis-ci.com/RaimondB/node-red-contrib-nefit-easy)
+[![Known Vulnerabilities](https://snyk.io/test/github/RaimondB/node-red-contrib-nefit-easy/badge.svg?targetFile=package.json)](https://snyk.io/test/github/RaimondB/node-red-contrib-nefit-easy?targetFile=package.json)
 
 This Node-RED Node is based on the <a href="https://github.com/robertklep/nefit-easy-commands">Nefit Easy™ commands library build by Robert Klep</a>
 
