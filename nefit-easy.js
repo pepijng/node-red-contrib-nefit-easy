@@ -97,7 +97,7 @@ module.exports = function(RED) {
                     break;
 
                 case 'set-temperature':
-                    promise = client.setTemperature(Number(value));
+                    promise = client.setTemperature(value);
                     break;
 
                 case 'set-fireplacemode':
