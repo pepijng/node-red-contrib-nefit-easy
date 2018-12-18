@@ -38,7 +38,11 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
             <option value="set-fireplacemode">Set Fireplace Mode</option>
             <option value="get-usermode">Get User Mode</option>
             <option value="set-usermode">Set User Mode</option>
-    </select>
+        </select>
+    </div>
+    <div class="form-row">
+        <label for="node-input-value"><i class="fa fa-tasks"></i> Value</label>
+        <input type="text" id="node-input-value" placeholder="Value">
     </div>
 </script>
 
@@ -127,17 +131,27 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
  }</code></pre>
      <li><b>Set temperature</b></li>
      Set the setpoint to the desired temperature.
-     <p><i>Input:</i></p> 
-     <p><code>value</code> can be prefixed with a specifier to conditionally set the temperature if it doesn't match the specifier.</p>
- <p>Valid specifiers:</p>
- <ul>
- <li><code>&gt;</code> : only set new temperature if it's larger then the currently set temperature;</li>
- <li><code>&lt;</code> : only set new temperature if it's smaller than the currently set temperature;</li>
- </ul>
- <p>Example:
- <em>"Set the thermostat to 21°C, but only if it's not already set higher than that."</em></p>
- <pre><code>client.setTemperature('&gt; 21').then(...)
- </code></pre>
+     <p><i>Input:</i></p>
+     <dl class="message-properties">
+        <dt>value
+            <span class="property-type">string | number</span>
+        </dt>
+        <dd>can be a number, or as a string can be prefixed with a specifier to add a bit of logic to changing the setpoint.</dd>
+    </dl> 
+    <p>The specifier can contain a base for relative changes:</p>
+    <ul>
+    <li><code>setpoint</code> : this is the current target temperature;</li>
+    <li><code>in house temp</code> : this is the current measured temperature;</li>
+    </ul>
+    <p>Valid specifiers:</p>
+    <ul>
+    <li><code>&gt; VALUE</code> : only change setpoint to "VALUE" if it's larger than the current setpoint;</li>
+    <li><code>&lt; VALUE</code> : only change setpoint to "VALUE" if it's smaller than the current setpoint;</li>
+    <li><code>setpoint + VALUE</code> : increase the setpoint by "VALUE"</li>
+    <li><code>setpoint - VALUE</code> : decrease the setpoint by "VALUE"</li>
+    <li><code>in house temp + VALUE</code> : change the setpoint to in house temperature + "VALUE"</li>
+    <li><code>in house temp - VALUE</code> : change the setpoint to in house temperature - "VALUE"</li>
+    </ul>
      <i>Output:</i> 
      <pre><code>{ status : 'ok' }</code></pre>
  
@@ -170,7 +184,8 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
             easyconfig: {value:"", type:"nefit-easy-config"},
             name: {value:""},
             topic: {value:"nefit-easy", required:true},
-            command: {value:""} 
+            command: {value:""},
+            value: {value:""}
         },
         inputs:1,               
         outputs:1,              
@@ -183,43 +198,4 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
             return this.name?"node_label_italic":"";
         }
     });
-</script>
-
-
-<!-- 
-    Configuration node for Easy connection settings.
--->
-<script type="text/javascript">
-    RED.nodes.registerType('nefit-easy-config',{
-        category: 'config',
-        defaults: {
-            serialNumber: {value:""}, 
-            accessKey: {value:""}, 
-            password: {value:""},
-            timeout: {value:"30"}
-        },
-        label: function() {
-            return "Easy - "+this.serialNumber;
-        }
-    });
-</script>
-
-<script type="text/x-red" data-template-name="nefit-easy-config">
-    <div class="form-row">
-        <label for="node-config-input-serialNumber"><i class="fa fa-asterisk"></i> Serial</label>
-        <input type="text" id="node-config-input-serialNumber" placeholder="Nefit Easy Serial">
-    </div>
-    <div class="form-row">
-        <label for="node-config-input-accessKey"><i class="fa fa-tablet"></i> Accesscode</label>
-        <input type="text" id="node-config-input-accessKey" placeholder="Nefit Easy Access Code">
-    </div>
-    <div class="form-row">
-        <label for="node-config-input-password"><i class="fa fa-lock"></i> Password</label>
-        <input type="password" id="node-config-input-password">
-    </div>
-        <div class="form-row">
-        <label for="node-config-input-timeout"><i class="fa fa-cogs"></i> Timeout</label>
-        <input type="text" id="node-config-input-timeout">
-    </div>
-
 </script>

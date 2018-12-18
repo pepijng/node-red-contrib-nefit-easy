@@ -23,7 +23,8 @@
   ],
   "node-red": {
     "nodes": {
-      "nefit-easy": "nefit-easy.js"
+      "nefit-easy": "nefit-easy.js",
+      "nefit-easy-config": "nefit-easy-config.js"
     }
   },
   "devDependencies": {

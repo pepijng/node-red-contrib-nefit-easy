@@ -14,126 +14,22 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 */
 
 module.exports = function(RED) {
-    "use strict";
-    //
-    // Use Robert Klep's Nefit Easy Library (https://github.com/robertklep/nefit-easy-commands)
-    //
-    var EasyClient = require('nefit-easy-commands');
-    
-    
-    function NefitEasyConfigNode(n) {
-        // 
-        // The configuration node stores the Nefit configuration and initiates the connection to Bosch backend servers.
-        //
-        RED.nodes.createNode(this,n);
-        
-        // Get configuration parameters
-        this.serialNumber = n.serialNumber; 
-        this.accessKey = n.accessKey;
-        this.password = n.password;
-        this.timeout = n.timeout;
-        
-        this.connected = false;
-        
-        this.log('Starting Nefit Easy Node for Node-RED.');
-
-        // Start connection to Bosch backend servers.
-        const client = EasyClient(
-        {
-                        serialNumber : this.serialNumber,
-                        accessKey    : this.accessKey,
-                        password     : this.password,
-                        requestTimeout : 30000,
-        });
-        
-        this.connecting = false;
-        
-        // connect
-        client.connect().then(() => {
-            this.log('Nefit Easy '+this.serialNumber+' connected to Bosch backend.');
-            // Connected to Nefit thermostat and get firmware version. 
-            return client.get('/gateway/versionFirmware');
-        }).then((get) => {
-            //this.log(JSON.stringify(get))
-            // Your Easy returned it's firmware, change status to connected.
-            this.connected = true;
-            this.log('Nefit Easy software firmware version: '+ get.value)
-        }).catch((err) => {
-            this.error('Nefit initialization : '+err);
-        });
-        
-        this.on("close", function() {
-            // Close connection to Bosch backend
-            client.end()
-            this.connected = false;
-            this.log('Nefit Easy Client disconnected from the Bosch backend.');
-        });
-        
-        
-        //
-        // Command Functions
-        //
-        this.command = function(command,uri,value) {
-            this.log('Nefit command '+command+' (param '+ uri + ' value '+value+')');
-            var promise = null;
-
-            switch (command) {
-                case 'display-code':
-                    command = 'displayCode';
-                // fall-through
-                case 'status'   :
-                case 'pressure' :
-                case 'location' :
-                case 'program'  :
-                    promise = client[command]();
-                    break;
-                
-                case 'get-usermode':
-                    promise = client.userMode();
-                    break;
-
-                case 'set-usermode':
-                    promise = client.setUserMode(value);
-                    break;
-
-                case 'set-temperature':
-                    promise = client.setTemperature(value);
-                    break;
-
-                case 'set-fireplacemode':
-                    promise = client.setFireplaceMode(value);
-                    break;
-
-                case 'flow-temperature':
-                      promise = client.get('/heatingCircuits/hc1/actualSupplyTemperature').then((r) => {
-                        return { temperature : r.value, unit : r.unitOfMeasure }
-                       });
-                    break;
-
-                default:
-                    return;
-                }
-
-                return promise;
-        }
-
-    }
-    RED.nodes.registerType("nefit-easy-config",NefitEasyConfigNode);
-// ------------------------------------------------------------------------------------------
     function NefitEasyNode(n) {
     //
     // Nefit Easy Input Node
     //
-        
+        this.RED = RED;
         // Create a RED node
-        RED.nodes.createNode(this,n);
+        this.RED.nodes.createNode(this,n);
         
         this.topic = n.topic;
         this.command = n.command;
+        this.configuredValue = n.value;
         this.easyconfig = n.easyconfig;
         
+
         // Get configuration data an initialize Netfit Easy Client from Configuration Node
-        this.easy = RED.nodes.getNode(this.easyconfig);
+        this.easy = this.RED.nodes.getNode(this.easyconfig);
 
         var node = this;
         var msg = {};
@@ -142,16 +38,18 @@ module.exports = function(RED) {
         this.on('input', function (msg) {
         
         node.uri = null;
-        node.value = null;
         
         if (this.easy.connected) {
             this.status({fill:"green",shape:"ring",text:"connected"});
             
-        // Set-Temperature needs additional variables
-        if (node.command == 'set-temperature' ||
-            node.command == 'set-fireplacemode' ||
-            node.command == 'set-usermode') {
-            node.value = msg.payload;
+        // Set-commands needs additional variables coming from static config or the payload
+        if (node.command.startsWith('set-')) {
+            //Only use payload if value has not been configured
+            node.value = node.configuredValue || msg.payload;
+            // if(!node.value)
+            // {
+            //     node.value = msg.payload;
+            // }
         }
                 
         // Execute command and generate MQTT message
