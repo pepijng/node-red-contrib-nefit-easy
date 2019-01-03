@@ -35,9 +35,6 @@
     "should": "^13.2.3",
     "snyk": "^1.113.0"
   },
-  "peerDependencies": {
-    "node-red": "~0.18.4"
-  },
   "scripts": {
     "test": "snyk test && mocha \"test/**/*_spec.js\""
   }
