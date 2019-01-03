@@ -1,6 +1,6 @@
 {
   "name": "node-red-contrib-nefit-easy2",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "Nefit Easy node for Node RED (with docs and extra functions )",
   "author": "Raimond Brookman <raimondb@gmail.com>",
   "license": "MIT",
@@ -34,9 +34,6 @@
     "node-red-node-test-helper": "^0.1.8",
     "should": "^13.2.3",
     "snyk": "^1.113.0"
-  },
-  "peerDependencies": {
-    "node-red": "~0.18.4"
   },
   "scripts": {
     "test": "snyk test && mocha \"test/**/*_spec.js\""
