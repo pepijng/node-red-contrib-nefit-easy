@@ -11,12 +11,8 @@ The typical setup is show below:
 Also see this link for an [importable version of the example](examples/nefit-easy-flow.json).
 
 ---
-<<<<<<< HEAD
 *Pro-Tip* : Be sure to use an external trigger (such as the inject node) to get the latest status. This way you can determine the update speed yourself. However, keep in mind that updating quicker than every 60 seconds will probably result into errors because of limitations of the Nefit API.
 
-=======
-*Pro-Tip*: Be sure to use an external trigger (such as the inject node) to get the latest status. This way you can determine the update speed yourself. However, keep in mind that updating quicker than every 60 seconds will probably result into errors because of limitations of the Nefit API.
->>>>>>> c57dd2729f9c5637702147434b83fd36608abb72
 ---
 
 This Node-RED Node is based on the <a href="https://github.com/robertklep/nefit-easy-commands">Nefit Easy™ commands library build by Robert Klep</a>.
