@@ -6,9 +6,9 @@
 [![Known Vulnerabilities](https://snyk.io/test/github/RaimondB/node-red-contrib-nefit-easy/badge.svg?targetFile=package.json)](https://snyk.io/test/github/RaimondB/node-red-contrib-nefit-easy?targetFile=package.json)
 
 The typical setup is show below:
-![alt text](https://raw.githubusercontent.com/RaimondB/node-red-contrib-nefit-easy/master/images/nefit-easy-flow.PNG "Example flow")
+![alt text](images/nefit-easy-flow.PNG "Example flow")
 
-Also see this link for an [importable version of the example](https://raw.githubusercontent.com/RaimondB/node-red-contrib-nefit-easy/master/examples/nefit-easy-flow.json).
+Also see this link for an [importable version of the example](examples/nefit-easy-flow.json).
 
 Pro-Tip: Be sure to use an external trigger (such as the inject node) to get the latest status. This way you can determine the update speed yourself. However, keep in mind that updating quicker than every 60 seconds will probably result into errors because of limitations of the Nefit API.
 
