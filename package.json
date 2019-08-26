@@ -1,6 +1,6 @@
 {
   "name": "node-red-contrib-nefit-easy2",
-  "version": "1.4.3",
+  "version": "1.4.4",
   "description": "Nefit Easy node for Node RED (with docs and extra functions )",
   "author": "Raimond Brookman <raimondb@gmail.com>",
   "license": "MIT",
@@ -32,10 +32,9 @@
     "mocha": "^6.0.2",
     "node-red": "~0.20.5",
     "node-red-node-test-helper": "^0.2.2",
-    "should": "^13.2.3",
-    "snyk": "^1.113.0"
+    "should": "^13.2.3"
   },
   "scripts": {
-    "test": "snyk test && mocha \"test/**/*_spec.js\""
+    "test": "mocha \"test/**/*_spec.js\""
   }
 }
