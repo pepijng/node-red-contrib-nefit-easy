@@ -1,0 +1,89 @@
+[
+    {
+        "id": "72e8e5e5.b7b53c",
+        "type": "nefit-easy",
+        "z": "e455af83.8e81c",
+        "easyconfig": "31304d70.bddaf2",
+        "name": "",
+        "topic": "nefit-easy",
+        "command": "status",
+        "value": "",
+        "x": 420,
+        "y": 520,
+        "wires": [
+            [
+                "b8e9f2ef.3c906"
+            ]
+        ]
+    },
+    {
+        "id": "8cce4965.286728",
+        "type": "inject",
+        "z": "e455af83.8e81c",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 220,
+        "y": 520,
+        "wires": [
+            [
+                "72e8e5e5.b7b53c"
+            ]
+        ]
+    },
+    {
+        "id": "29fffbf1.af7214",
+        "type": "debug",
+        "z": "e455af83.8e81c",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "x": 830,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "b8e9f2ef.3c906",
+        "type": "change",
+        "z": "e455af83.8e81c",
+        "name": "Get Current Temp",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload[\"in house temp\"]",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 630,
+        "y": 520,
+        "wires": [
+            [
+                "29fffbf1.af7214"
+            ]
+        ]
+    },
+    {
+        "id": "31304d70.bddaf2",
+        "type": "nefit-easy-config",
+        "z": "",
+        "serialNumber": "",
+        "accessKey": "",
+        "password": "",
+        "timeout": "30"
+    }
+]
