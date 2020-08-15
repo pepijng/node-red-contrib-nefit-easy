@@ -38,6 +38,8 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
             <option value="set-fireplacemode">Set Fireplace Mode</option>
             <option value="get-usermode">Get User Mode</option>
             <option value="set-usermode">Set User Mode</option>
+            <option value="getval-gasusage">Get Gas Usage</option>
+            <option value="gasusagepage">Get Max Gas Usage PageNr</option>
         </select>
     </div>
     <div class="form-row">
@@ -172,6 +174,24 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
      <p><i>Output:</i> 
      <pre><code>{ status : 'ok' }</code></pre>
      </p>
+     <li><b>Get Gas Usage</b></li>
+     <p><i>Input:</i></p> 
+     <p>String (PageNr, latest page if left empty)</p>
+     <p><i>Output:</i>
+        array of objects for each day (max 32 entries per page): 
+     <pre><code>[{  date: Date,
+           hot water: Number (in kwH)
+           central heating: Number (in kwH)
+           average outdoor temperature: Number (in degrees Ceclius)
+        },
+        {...}
+        ]</code></pre>
+     </p>
+     <li><b>Get Latest Gas Usage PageNr</b></li>
+     <p><i>Output:</i>
+     <pre><code>Number (latest page of 32 entries)</code></pre>
+     </p>
+
  </ul>
  </script>
 

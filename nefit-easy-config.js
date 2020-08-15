@@ -18,7 +18,6 @@ module.exports = function(RED) {
     //
     var EasyClient = require('nefit-easy-commands');
     
-    
     function NefitEasyConfigNode(n) {
         // 
         // The configuration node stores the Nefit configuration and initiates the connection to Bosch backend servers.
@@ -108,6 +107,14 @@ module.exports = function(RED) {
                        });
                     break;
 
+                case 'getval-gasusage':
+                    promise = client.gasUsage(value);
+                    break;
+
+                case 'gasusagepage' :
+                    promise = client.gasUsagePage();
+                    break;
+  
                 default:
                     return;
                 }

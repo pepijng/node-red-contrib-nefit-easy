@@ -5,10 +5,10 @@
 [![Build Status](https://travis-ci.com/RaimondB/node-red-contrib-nefit-easy.svg?branch=master)](https://travis-ci.com/RaimondB/node-red-contrib-nefit-easy)
 [![Known Vulnerabilities](https://snyk.io/test/github/RaimondB/node-red-contrib-nefit-easy/badge.svg?targetFile=package.json)](https://snyk.io/test/github/RaimondB/node-red-contrib-nefit-easy?targetFile=package.json)
 
-The typical setup is show below:
+A simple setup to get the current temperature is shown below:
 ![alt text](images/nefit-easy-flow.PNG "Example flow")
 
-Also see this link for an [importable version of the example](examples/nefit-easy-flow.json).
+Also see [a number of importable examples in my repository](https://github.com/RaimondB/node-red-contrib-nefit-easy/tree/master/examples)).
 
 ---
 *Pro-Tip* : Be sure to use an external trigger (such as the inject node) to get the latest status. This way you can determine the update speed yourself. However, keep in mind that updating quicker than every 60 seconds will probably result into errors because of limitations of the Nefit API.
@@ -17,6 +17,8 @@ Also see this link for an [importable version of the example](examples/nefit-eas
 
 This Node-RED Node is based on the <a href="https://github.com/robertklep/nefit-easy-commands">Nefit Easy™ commands library build by Robert Klep</a>.
 At this link also all usable commands are documented and not repeated here for maintainability.
+
+*Minimum supported Node version is now at 10.x.*
 
 ## Features
 
@@ -30,6 +32,7 @@ At this link also all usable commands are documented and not repeated here for m
 * Set Fireplace Mode (enable or disable)
 * Get User Mode (manual or clock operation mode
 * Set User Mode
+* Get Gas Usage Data per day
 
 ## Installation
 

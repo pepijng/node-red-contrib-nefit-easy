@@ -1,0 +1,102 @@
+[
+    {
+        "id": "a248bce7.8f79d",
+        "type": "nefit-easy",
+        "z": "33143d4b.705502",
+        "easyconfig": "6a526c87.a87da4",
+        "name": "",
+        "topic": "nefit-easy",
+        "command": "getval-gasusage",
+        "value": "",
+        "x": 440,
+        "y": 200,
+        "wires": [
+            [
+                "12c9e807.0285c8",
+                "326e6cad.8b1bc4"
+            ]
+        ]
+    },
+    {
+        "id": "12c9e807.0285c8",
+        "type": "debug",
+        "z": "33143d4b.705502",
+        "name": "Easy Results",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 650,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "326e6cad.8b1bc4",
+        "type": "function",
+        "z": "33143d4b.705502",
+        "name": "Map Nefit to influx",
+        "func": "var result = msg.payload.map(v => {\n    return { \n        timestamp : v.date,\n        measurement : \"nefit_easy\",\n        fields: {\n            hot_water : v[\"hot water\"],\n            central_heating : v[\"central heating\"],\n            average_outdoor_temperature : v[\"average outdoor temperature\"]\n        }\n    };\n});\n\nmsg.payload = result;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 670,
+        "y": 200,
+        "wires": [
+            [
+                "8b8ade76.8c1ac"
+            ]
+        ]
+    },
+    {
+        "id": "16eeece5.cf6733",
+        "type": "inject",
+        "z": "33143d4b.705502",
+        "name": "Trigger Daily",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "00 04 * * *",
+        "once": false,
+        "onceDelay": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "num",
+        "x": 180,
+        "y": 200,
+        "wires": [
+            [
+                "a248bce7.8f79d"
+            ]
+        ]
+    },
+    {
+        "id": "8b8ade76.8c1ac",
+        "type": "influxdb batch",
+        "z": "33143d4b.705502",
+        "influxdb": "",
+        "precision": "",
+        "retentionPolicy": "",
+        "name": "",
+        "x": 940,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "6a526c87.a87da4",
+        "type": "nefit-easy-config",
+        "z": "",
+        "timeout": "30"
+    }
+]

@@ -1,0 +1,205 @@
+[
+    {
+        "id": "cc842a3e.278718",
+        "type": "nefit-easy",
+        "z": "76f4e759.530ae8",
+        "easyconfig": "f28ada3e.a49d18",
+        "name": "",
+        "topic": "nefit-easy",
+        "command": "getval-gasusage",
+        "value": "",
+        "x": 560,
+        "y": 320,
+        "wires": [
+            [
+                "1c3890ae.f046ff"
+            ]
+        ]
+    },
+    {
+        "id": "713e2984.e48828",
+        "type": "inject",
+        "z": "76f4e759.530ae8",
+        "name": "Trigger All Pages",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 120,
+        "y": 60,
+        "wires": [
+            [
+                "b66a472b.d9b848"
+            ]
+        ]
+    },
+    {
+        "id": "d60b59b1.759198",
+        "type": "influxdb batch",
+        "z": "76f4e759.530ae8",
+        "influxdb": "",
+        "precision": "",
+        "retentionPolicy": "",
+        "name": "",
+        "x": 860,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "1c3890ae.f046ff",
+        "type": "function",
+        "z": "76f4e759.530ae8",
+        "name": "Map Nefit to influx",
+        "func": "var result = msg.payload.map(v => {\n    return { \n        timestamp : v.date,\n        measurement : \"nefit_easy\",\n        fields: {\n            hot_water : v[\"hot water\"],\n            central_heating : v[\"central heating\"],\n            average_outdoor_temperature : v[\"average outdoor temperature\"]\n        }\n    };\n});\n\nmsg.payload = result;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 610,
+        "y": 460,
+        "wires": [
+            [
+                "d60b59b1.759198",
+                "3f9ad713.4f3f08"
+            ]
+        ]
+    },
+    {
+        "id": "3f9ad713.4f3f08",
+        "type": "function",
+        "z": "76f4e759.530ae8",
+        "name": "Loop all pages",
+        "func": "\nvar newPage =  flow.get(\"page\");\nnewPage++;\nflow.set(\"page\", newPage);\n\nvar maxPage = flow.get(\"maxpage\");\n\nif(newPage <= maxPage)\n{\nmsg.payload = newPage;\nreturn msg;\n}\nelse\n{\n    return null;\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 340,
+        "y": 460,
+        "wires": [
+            [
+                "cc239a8b.da7928"
+            ]
+        ]
+    },
+    {
+        "id": "b66a472b.d9b848",
+        "type": "change",
+        "z": "76f4e759.530ae8",
+        "name": "Reset Page",
+        "rules": [
+            {
+                "t": "set",
+                "p": "page",
+                "pt": "flow",
+                "to": "0",
+                "tot": "num"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 140,
+        "y": 140,
+        "wires": [
+            [
+                "b8d14a60.24f6d8"
+            ]
+        ]
+    },
+    {
+        "id": "cc239a8b.da7928",
+        "type": "delay",
+        "z": "76f4e759.530ae8",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "2",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "x": 380,
+        "y": 320,
+        "wires": [
+            [
+                "cc842a3e.278718"
+            ]
+        ]
+    },
+    {
+        "id": "b8d14a60.24f6d8",
+        "type": "nefit-easy",
+        "z": "76f4e759.530ae8",
+        "easyconfig": "f28ada3e.a49d18",
+        "name": "",
+        "topic": "nefit-easy",
+        "command": "gasusagepage",
+        "value": "",
+        "x": 300,
+        "y": 140,
+        "wires": [
+            [
+                "3b13e1ab.b6e4ae"
+            ]
+        ]
+    },
+    {
+        "id": "3b13e1ab.b6e4ae",
+        "type": "function",
+        "z": "76f4e759.530ae8",
+        "name": "Get Max Page Nr",
+        "func": "flow.set(\"maxpage\", msg.payload || 0);\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 190,
+        "y": 240,
+        "wires": [
+            [
+                "80d6e6e5.ec7d58",
+                "3f9ad713.4f3f08"
+            ]
+        ]
+    },
+    {
+        "id": "80d6e6e5.ec7d58",
+        "type": "debug",
+        "z": "76f4e759.530ae8",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 510,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "f28ada3e.a49d18",
+        "type": "nefit-easy-config",
+        "z": "",
+        "timeout": "30"
+    }
+]

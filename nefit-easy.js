@@ -43,16 +43,23 @@ module.exports = function(RED) {
             this.status({fill:"green",shape:"ring",text:"connected"});
             
         // Set-commands needs additional variables coming from static config or the payload
-        if (node.command.startsWith('set-')) {
+        if (node.command.startsWith('set-') || node.command.startsWith('getval-')) {
             //Only use payload if value has not been configured
-            node.value = node.configuredValue || msg.payload;
-            // if(!node.value)
-            // {
-            //     node.value = msg.payload;
-            // }
+            if(node.configuredValue)
+            {
+                node.value = node.configuredValue;    
+            }
+            else if (msg.payload)
+            {
+                node.value = msg.payload;
+            }
+            else
+            {
+                node.value = undefined;
+            }            
         }
                 
-        // Execute command and generate MQTT message
+        // Execute command and generate message
         this.status({fill:"yellow",shape:"ring",text:"communicating"});
         this.easy.command(node.command, node.uri, node.value).then((data) => {
             msg.topic   = this.topic;
