@@ -1,9 +1,10 @@
-## Nefit Easy™ Node-RED Node
+# Nefit Easy™ Node-RED Node
 
 <span class="badge-npmversion"><a href="https://www.npmjs.com/package/node-red-contrib-nefit-easy2" title="View this project on NPM"><img src="https://img.shields.io/npm/v/node-red-contrib-nefit-easy2.svg" alt="NPM version" /></a></span>
 <span class="badge-npmdownloads"><a href="https://npmjs.org/package/node-red-contrib-nefit-easy2" title="View this project on NPM"><img src="https://img.shields.io/npm/dm/node-red-contrib-nefit-easy2.svg" alt="NPM downloads" /></a></span>
 [![Build Status](https://travis-ci.com/RaimondB/node-red-contrib-nefit-easy.svg?branch=master)](https://travis-ci.com/RaimondB/node-red-contrib-nefit-easy)
 [![Known Vulnerabilities](https://snyk.io/test/github/RaimondB/node-red-contrib-nefit-easy/badge.svg?targetFile=package.json)](https://snyk.io/test/github/RaimondB/node-red-contrib-nefit-easy?targetFile=package.json)
+[![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
 
 A simple setup to get the current temperature is shown below:
 ![alt text](images/nefit-easy-flow.PNG "Example flow")
@@ -36,6 +37,6 @@ At this link also all usable commands are documented and not repeated here for m
 
 ## Installation
 
-```
-$ npm -g i node-red-contrib-nefit-easy2
+```shell
+npm -g i node-red-contrib-nefit-easy2
 ```
