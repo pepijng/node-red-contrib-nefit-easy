@@ -22,10 +22,11 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
             serialNumber: {value:""}, 
             accessKey: {value:""}, 
             password: {value:""},
-            timeout: {value:"30"}
+            timeout: {value:"30"},
+            filterInfoMessages: {value:false}
         },
         label: function() {
-            return "Easy - "+this.serialNumber;
+            return "Easy - " + this.serialNumber;
         }
     });
 </script>
@@ -43,9 +44,13 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
         <label for="node-config-input-password"><i class="fa fa-lock"></i> Password</label>
         <input type="password" id="node-config-input-password">
     </div>
-        <div class="form-row">
+    <div class="form-row">
         <label for="node-config-input-timeout"><i class="fa fa-cogs"></i> Timeout</label>
         <input type="text" id="node-config-input-timeout">
+    </div>
+    <div class="form-row">
+        <label for="node-config-input-filterInfoMessages"><i class="fa fa-cogs"></i>Filter Info Messages</label>
+        <input type="checkbox" id="node-config-input-filterInfoMessages">
     </div>
 
 </script>

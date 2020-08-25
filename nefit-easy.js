@@ -13,79 +13,79 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 */
 
-module.exports = function(RED) {
+module.exports = function (RED) {
     function NefitEasyNode(n) {
-    //
-    // Nefit Easy Input Node
-    //
+        //
+        // Nefit Easy Input Node
+        //
         this.RED = RED;
         // Create a RED node
-        this.RED.nodes.createNode(this,n);
-        
+        this.RED.nodes.createNode(this, n);
+
         this.topic = n.topic;
         this.command = n.command;
         this.configuredValue = n.value;
         this.easyconfig = n.easyconfig;
-        
+
 
         // Get configuration data an initialize Netfit Easy Client from Configuration Node
         this.easy = this.RED.nodes.getNode(this.easyconfig);
 
         var node = this;
         var msg = {};
-  
+
         // This will be executed on every input message
         this.on('input', function (msg) {
-        
-        node.uri = null;
-        
-        if (this.easy.connected) {
-            this.status({fill:"green",shape:"ring",text:"connected"});
-            
-        // Set-commands needs additional variables coming from static config or the payload
-        if (node.command.startsWith('set-') || node.command.startsWith('getval-')) {
-            //Only use payload if value has not been configured
-            if(node.configuredValue)
-            {
-                node.value = node.configuredValue;    
-            }
-            else if (msg.payload)
-            {
-                node.value = msg.payload;
-            }
-            else
-            {
-                node.value = undefined;
-            }            
-        }
-                
-        // Execute command and generate message
-        this.status({fill:"yellow",shape:"ring",text:"communicating"});
-        this.easy.command(node.command, node.uri, node.value).then((data) => {
-            msg.topic   = this.topic;
-            msg.payload = data;
-            this.send(msg);
-            this.status({fill:"green",shape:"ring",text:"connected"});
-        }).catch((e) => {
-            
-            switch (e) {
-                case 'REQUEST_TIMEOUT':
-                    node.warn('Nefit Command '+node.command+' : '+e);
-                    break;
-                    
-                default:
-                    node.error(e);
-                    return;
-            }
-        });
 
-        } else {
-            this.status({fill:"red",shape:"ring",text:"disconnected"});
-        }
-            
+            node.uri = null;
+
+            if (this.easy.connected) {
+                this.status({ fill: "green", shape: "ring", text: "connected" });
+
+                // Set-commands needs additional variables coming from static config or the payload
+                if (node.command.startsWith('set-') || node.command.startsWith('getval-')) {
+                    //Only use payload if value has not been configured
+                    if (node.configuredValue) {
+                        node.value = node.configuredValue;
+                    }
+                    else if (msg.payload) {
+                        node.value = msg.payload;
+                    }
+                    else {
+                        node.value = undefined;
+                    }
+                }
+
+                // Execute command and generate message
+                this.status({ fill: "yellow", shape: "ring", text: "communicating" });
+                
+                this.easy.command(node.command, node.uri, node.value).then((data) => {
+                    msg.topic = this.topic;
+                    msg.payload = data;
+                    this.send(msg);
+                    this.status({ fill: "green", shape: "ring", text: "connected" });
+                }).catch((e) => {
+
+                    this.status({ fill: "red", shape: "ring", text: "error" });
+
+                    switch (e) {
+                        case 'REQUEST_TIMEOUT':
+                            node.warn('Nefit Command ' + node.command + ' : ' + e);
+                            break;
+
+                        default:
+                            node.error('Nefit Command ' + node.command + ' : ' + e);
+                            return;
+                    }
+                });
+
+            } else {
+                this.status({ fill: "red", shape: "ring", text: "disconnected" });
+            }
+
         });
-        this.on("close", function() {
+        this.on("close", function () {
         });
     }
-    RED.nodes.registerType("nefit-easy",NefitEasyNode);
+    RED.nodes.registerType("nefit-easy", NefitEasyNode);
 }
