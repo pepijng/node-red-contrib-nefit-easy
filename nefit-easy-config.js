@@ -11,117 +11,129 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 */
 
-module.exports = function(RED) {
+module.exports = function (RED) {
     "use strict";
     //
     // Use Robert Klep's Nefit Easy Library (https://github.com/robertklep/nefit-easy-commands)
     //
     var EasyClient = require('nefit-easy-commands');
-    
+
     function NefitEasyConfigNode(n) {
         // 
         // The configuration node stores the Nefit configuration and initiates the connection to Bosch backend servers.
         //
-        RED.nodes.createNode(this,n);
-        
+        RED.nodes.createNode(this, n);
+
         // Get configuration parameters
-        this.serialNumber = n.serialNumber; 
+        this.serialNumber = n.serialNumber;
         this.accessKey = n.accessKey;
         this.password = n.password;
         this.timeout = n.timeout;
-        
+        this.filterInfoMessages = n.filterInfoMessages;
+
         this.connected = false;
-        
+
         this.log('Starting Nefit Easy Node for Node-RED.');
 
         // Start connection to Bosch backend servers.
         const client = EasyClient(
-        {
-                        serialNumber : this.serialNumber,
-                        accessKey    : this.accessKey,
-                        password     : this.password,
-                        requestTimeout : 30000,
-        });
-        
+            {
+                serialNumber: this.serialNumber,
+                accessKey: this.accessKey,
+                password: this.password,
+                requestTimeout: 30000,
+            });
+
         this.connecting = false;
-        
+
         // connect
         client.connect().then(() => {
-            this.log('Nefit Easy '+this.serialNumber+' connected to Bosch backend.');
+            this.log('Nefit Easy ' + this.serialNumber + ' connected to Bosch backend.');
             // Connected to Nefit thermostat and get firmware version. 
             return client.get('/gateway/versionFirmware');
         }).then((get) => {
             //this.log(JSON.stringify(get))
             // Your Easy returned it's firmware, change status to connected.
             this.connected = true;
-            this.log('Nefit Easy software firmware version: '+ get.value)
+            this.log('Nefit Easy software firmware version: ' + get.value)
         }).catch((err) => {
-            this.error('Nefit initialization : '+err);
+            this.error('Nefit initialization error: ' + err);
         });
-        
-        this.on("close", function() {
+
+        this.on("close", function () {
             // Close connection to Bosch backend
             client.end()
             this.connected = false;
             this.log('Nefit Easy Client disconnected from the Bosch backend.');
         });
-        
-        
+
+        this.logInfo = function (message) {
+            if (!this.filterInfoMessages) {
+                this.log(message);
+            }
+        }
+
         //
         // Command Functions
         //
-        this.command = function(command,uri,value) {
-            this.log('Nefit command '+command+' (param '+ uri + ' value '+value+')');
+        this.command = function (command, uri, value) {
+
             var promise = null;
 
             switch (command) {
                 case 'display-code':
                     command = 'displayCode';
                 // fall-through
-                case 'status'   :
-                case 'pressure' :
-                case 'location' :
-                case 'program'  :
+                case 'status':
+                case 'pressure':
+                case 'location':
+                case 'program':
+                    this.logInfo('Nefit command: ' + command);
                     promise = client[command]();
                     break;
-                
+
                 case 'get-usermode':
+                    this.logInfo('Nefit command: ' + command);
                     promise = client.userMode();
                     break;
 
                 case 'set-usermode':
+                    this.logInfo('Nefit command: ' + command + ' (value: ' + value + ')');
                     promise = client.setUserMode(value);
                     break;
 
                 case 'set-temperature':
+                    this.logInfo('Nefit command: ' + command + ' (value: ' + value + ')');
                     promise = client.setTemperature(value);
                     break;
 
                 case 'set-fireplacemode':
+                    this.logInfo('Nefit command: ' + command + ' (value: ' + value + ')');
                     promise = client.setFireplaceMode(value);
                     break;
 
                 case 'flow-temperature':
-                      promise = client.get('/heatingCircuits/hc1/actualSupplyTemperature').then((r) => {
-                        return { temperature : r.value, unit : r.unitOfMeasure }
-                       });
+                    promise = client.get('/heatingCircuits/hc1/actualSupplyTemperature').then((r) => {
+                        return { temperature: r.value, unit: r.unitOfMeasure }
+                    });
                     break;
 
                 case 'getval-gasusage':
+                    this.logInfo('Nefit command: ' + command + ' (value: ' + value + ')');
                     promise = client.gasUsage(value);
                     break;
 
-                case 'gasusagepage' :
+                case 'gasusagepage':
+                    this.logInfo('Nefit command: ' + command);
                     promise = client.gasUsagePage();
                     break;
-  
+
                 default:
                     return;
-                }
+            }
 
-                return promise;
+            return promise;
         }
-
     }
-    RED.nodes.registerType("nefit-easy-config",NefitEasyConfigNode);
+    RED.nodes.registerType("nefit-easy-config", NefitEasyConfigNode);
 }
