@@ -5,6 +5,10 @@ updates:
   schedule:
     interval: daily
     time: "04:00"
+  commit-message:
+    prefix: "fix"
+    prefix-development: "build"
+    include: "scope"
   open-pull-requests-limit: 10
   reviewers:
   - raimondb
