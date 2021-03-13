@@ -12,16 +12,39 @@ pr:
 pool:
   vmImage: ubuntu-latest
 
+strategy:
+  matrix:
+    node_12_x:
+      node_version: 12.x
+    node_14_x:
+      node_version: 14.x
+
 resources:
 - repo: self
 
+
 stages:
+- stage: Build
+  jobs:
+  - job: Build
+    displayName: Build & Test
+    steps:
+    - task: NodeTool@0 
+      inputs:
+        versionSpec: $(node_version)
+    - script: npm test
+    - task: PublishTestResults@2
+      condition: succeededOrFailed()
+      inputs:
+        testRunner: JUnit
+        testResultsFiles: '**/TEST-RESULTS.xml'
+
 
 - stage: Release
   displayName: Release a new version to NPM
   condition:  and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
   jobs:
-  - job: Build
+  - job: Release
     displayName: Build Docker & Release to NPM
     pool:
       vmImage: ubuntu-latest
