@@ -30,7 +30,9 @@ stages:
     - task: NodeTool@0 
       inputs:
         versionSpec: $(node_version)
-    - script: npm test
+    - script: |
+        npm install
+        npm test
     - task: PublishTestResults@2
       condition: succeededOrFailed()
       inputs:
