@@ -6,16 +6,34 @@
 trigger:
 - master
 
+pr:
+- master
+
 pool:
   vmImage: ubuntu-latest
 
-steps:
-- task: NodeTool@0
-  inputs:
-    versionSpec: '10.x'
-  displayName: 'Install Node.js'
+resources:
+- repo: self
 
-- script: |
-    npm install
-    npm run build
-  displayName: 'npm install and build'
+stages:
+
+- stage: Release
+  displayName: Release a new version to NPM
+  condition:  and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+  jobs:
+  - job: Build
+    displayName: Build Docker & Release to NPM
+    pool:
+      vmImage: ubuntu-latest
+    steps:
+    - task: Npm@1
+      inputs: # Ensure that the semantic-release tool is installed as specified in the package.json
+        command: 'install'
+    - task: Bash@3
+      inputs:
+        targetType: 'inline'
+        script: |
+          npx semantic-release
+      env:
+        GH_TOKEN: $(GH_TOKEN)
+        NPM_TOKEN: $(NPM_TOKEN)
