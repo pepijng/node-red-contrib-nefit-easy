@@ -12,22 +12,20 @@ pr:
 pool:
   vmImage: ubuntu-latest
 
-strategy:
-  matrix:
-    node_12_x:
-      node_version: 12.x
-    node_14_x:
-      node_version: 14.x
-
 resources:
 - repo: self
-
 
 stages:
 - stage: Build
   jobs:
   - job: Build
     displayName: Build & Test
+    strategy:
+      matrix:
+        node_12_x:
+          node_version: 12.x
+        node_14_x:
+          node_version: 14.x
     steps:
     - task: NodeTool@0 
       inputs:
