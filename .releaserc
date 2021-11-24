@@ -1,0 +1,9 @@
+{
+  "plugins": [
+    "@semantic-release/commit-analyzer",
+    "@semantic-release/release-notes-generator",
+    ["@semantic-release/exec", {
+      "publishCmd": "docker run --rm raimondb/node-red-refresher node-red-contrib-nefit-easy2"
+    }],
+  ]
+}
